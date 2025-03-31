@@ -26,7 +26,7 @@ This project uses Docker Compose to start the server and run all necessary servi
 1. Clone this repository:
 
 ```bash
-git clone [https://gitlab.cis.strath.ac.uk/cmb21139/alarm.git](https://github.com/CallumSergeant/alarm.git)
+git clone https://github.com/CallumSergeant/alarm.git
 cd alarm
 ```
 
