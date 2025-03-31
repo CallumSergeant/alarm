@@ -1,0 +1,154 @@
+$primary: #4a90e2; 
+$secondary: #6c757d; 
+$success: #28a745; 
+$info: #17a2b8; 
+$warning: #ffc107; 
+$danger: #dc3545; 
+$light: #f8f9fa; 
+$dark: #343a40; 
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark
+);
+
+
+$body-bg: #f0f2f5;
+$body-color: $dark; 
+
+// Import Bootstrap
+@import "../bootstrap/scss/bootstrap.scss";
+
+
+.sidebar {
+    height: 100vh;
+    width: 250px;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    background: $primary;
+    padding-top: 20px;
+    border-right: 4px solid $primary;
+    box-shadow: 1px 0 15px rgba($dark, 0.6);
+    transition: width 0.3s;
+    z-index: 1000;
+}
+
+.sidebar.collapsed {
+    width: 80px;
+}
+
+.sidebar-toggler {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: $dark;
+    background: none;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: 10px 25px 10px 15px;
+    margin: 8px 0;
+    color: $light;
+    text-decoration: none;
+    background: rgba($light, 0.2);
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background: rgba($light, 0.4);
+    color: $dark;
+}
+
+.icon {
+    font-size: 1.2rem;
+    color: $light;
+    transition: color 0.3s;
+    margin-right: 15px;
+}
+
+.sidebar.collapsed a .text {
+    display: none;
+}
+
+.sidebar.collapsed a {
+    justify-content: center;
+}
+
+.sidebar.collapsed a .icon {
+    margin-right: 0;
+}
+
+.content {
+    margin-left: 250px;
+    margin-top: 60px;
+    padding: 20px;
+    transition: margin-left 0.3s;
+}
+
+.collapsed + .content {
+    margin-left: 80px;
+}
+
+.top-bar {
+    height: 60px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: $light;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+}
+
+.top-bar-left {
+    display: flex;
+    align-items: center;
+}
+
+.top-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.project-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-left: 10px;
+    color: $dark;
+}
+
+.profile-pic {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.no-transition {
+    transition: none !important;
+}

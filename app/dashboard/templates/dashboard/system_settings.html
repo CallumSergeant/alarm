@@ -1,0 +1,27 @@
+{% extends "dashboard/base.html" %}
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">System Scripts</h2>
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="row">
+            <!-- Install Script Column -->
+            <div class="col-md-6">
+                <label for="install_script"><strong>Install Script</strong></label>
+                <textarea name="install_script" rows="15" class="form-control">{{ install_script }}</textarea>
+            </div>
+
+            <!-- Uninstall Script Column -->
+            <div class="col-md-6">
+                <label for="uninstall_script"><strong>Uninstall Script</strong></label>
+                <textarea name="uninstall_script" rows="15" class="form-control">{{ uninstall_script }}</textarea>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

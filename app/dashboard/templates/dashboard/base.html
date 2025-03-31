@@ -1,0 +1,122 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ALARM Dashboard{% endblock %}</title>
+    <!-- Compiled custom Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'images/fav.png' %}">
+    <!-- Bootstrap icons via CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Chart.js via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <div class="sidebar-toggler" onclick="toggleSidebar()">
+                <i class="bi bi-list"></i>
+            </div>
+            <span class="project-name">ALARM | Auth Log Analysis and Real-time Monitoring</span>
+        </div>
+    </div>
+
+    <div class="sidebar hidden" id="sidebar">
+        <div class="menu-items">
+            <a href="{% url 'dashboard-home' %}" class="{% if request.resolver_match.url_name == 'dashboard-home' %}active{% endif %}">
+                <i class="bi bi-house icon"></i>
+                <span class="text">Dashboard</span>
+            </a>
+            <a href="{% url 'login-attempt-list' %}" class="{% if request.resolver_match.url_name == 'login-attempt-list' %}active{% endif %}">
+                <i class="bi bi-door-open icon"></i>
+                <span class="text">Login Attempts</span>
+            </a>
+            <a href="{% url 'blocked-ips' %}" class="{% if request.resolver_match.url_name == 'blocked-ips' %}active{% endif %}">
+                <i class="bi bi-shield-lock icon"></i>
+                <span class="text">Blocked IPs</span>
+            </a>
+            <a href="{% url 'alerts' %}" class="{% if request.resolver_match.url_name == 'alerts' %}active{% endif %}">
+                <i class="bi bi-exclamation-triangle icon"></i>
+                <span class="text">Alerts</span>
+            </a>
+            <a href="{% url 'managed-devices' %}" class="{% if request.resolver_match.url_name == 'managed-devices' %}active{% endif %}">
+                <i class="bi bi-pc-display icon"></i>
+                <span class="text">Managed Devices</span>
+            </a> 
+            <a href="{% url 'system-settings' %}" class="{% if request.resolver_match.url_name == 'system-settings' %}active{% endif %}">
+                <i class="bi bi-gear icon"></i>
+                <span class="text">Settings</span>
+            </a>
+            <a href="/docs">
+                <i class="bi bi-book icon"></i>
+                <span class="text">Docs</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="content" id="content">
+        {% if messages %}
+            <div class="alert-container">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show d-flex align-items-center" role="alert">
+                        <span class="me-auto">{{ message }}</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% block content %}
+        {% endblock %}
+
+    </div>
+
+    <!-- Bootstrap JavaScript -->
+    
+    <script>
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            var content = document.getElementById('content');
+            sidebar.classList.toggle('collapsed');
+            content.classList.toggle('collapsed');
+            
+            if (sidebar.classList.contains('collapsed')) {
+                localStorage.setItem('sidebarState', 'collapsed');
+            } else {
+                localStorage.setItem('sidebarState', 'expanded');
+            }
+        }
+
+        function loadSidebarState() {
+            var sidebar = document.getElementById('sidebar');
+            var content = document.getElementById('content');
+            var state = localStorage.getItem('sidebarState');
+
+            sidebar.classList.add('no-transition');
+            content.classList.add('no-transition');
+
+            if (state === 'collapsed') {
+                sidebar.classList.add('collapsed');
+                content.classList.add('collapsed');
+            } else {
+                sidebar.classList.remove('collapsed');
+                content.classList.remove('collapsed');
+            }
+
+            setTimeout(function() {
+                sidebar.classList.remove('no-transition');
+                content.classList.remove('no-transition');
+                sidebar.classList.remove('hidden');
+            }, 100);
+        }
+
+        window.onload = function() {
+            loadSidebarState();
+        };
+    </script>
+</body>
+</html>

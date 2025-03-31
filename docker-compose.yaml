@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: alarm_db        
+      POSTGRES_USER: alarm_user    
+      POSTGRES_PASSWORD: alarmpassword  
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - alarm_network
+
+  django:
+    build:
+      context: ./app
+    container_name: django
+    volumes:
+      - static:/static
+    ports:
+      - "5000:5000"
+      - "8000:8000"
+      - "8089:8089"
+    depends_on:
+      - db
+    networks:
+      - alarm_network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./app/static:/static
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./certs:/certs
+    depends_on:
+      - django
+    networks:
+      - alarm_network
+
+volumes:
+  static:
+  postgres_data:
+
+networks:
+  alarm_network:
